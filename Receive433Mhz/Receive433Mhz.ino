@@ -18,23 +18,6 @@ RCSwitch mySwitch = RCSwitch();
 int compteur = 0;
 
 
-/*
-// On limite à un évènement par seconde long
-#define debounceDelay 1000
-
-// On a 4 détecteurs, donc on a deux timers. Voir http://planet.madeinfr.org/page/16
-last_times[4] = {0,0};
-
-bool debounce(int number) {
-    if ((last_times[number] == 0) ||
-        ((millis() - last_times[number]) > debounceDelay)) {
-        last_times[number] = millis();
-        return true;
-    }
-    return false;
-}
-*/
-
 void setup() {
   Serial.begin(115200);
   mySwitch.enableReceive(0);  // Receiver on interrupt 0 => that is pin #2 on an Arduino Uno
@@ -44,23 +27,6 @@ void loop() {
   if (mySwitch.available()) {
     
     int value = mySwitch.getReceivedValue();
-
-/*       
-    if (value == 0) {
-      Serial.print("Unknown encoding");
-    } else {
-      Serial.print("Counter ");
-      Serial.print( compteur );
-      compteur = compteur +1;
-      Serial.print("Received ");
-      Serial.print( mySwitch.getReceivedValue() );
-      Serial.print(" / ");
-      Serial.print( mySwitch.getReceivedBitlength() );
-      Serial.print("bit ");
-      Serial.print("Protocol: ");
-      Serial.println( mySwitch.getReceivedProtocol() );
-    }
-*/
 
     switch (value) {
         case PRESENCE_ESCALIER_CAVE:
@@ -74,22 +40,9 @@ void loop() {
         case PORTE_BUANDERIE:
             Serial.println("Presence porte buanderie.");
             break;
-    
-        case XXX:
-            Serial.println("Presence XXX.");
-            break;
-            
-/*            
-        case ABCDEF:
-            Serial.println("Presence YYY.");
-            break;            
-*/
             
         default:
             Serial.print("Dispositif inconnu: ");
-            Serial.print("Counter ");
-            Serial.print( compteur );
-            compteur = compteur +1;
             Serial.print("Received ");
             Serial.print( mySwitch.getReceivedValue() );
             Serial.print(" / ");
@@ -101,6 +54,9 @@ void loop() {
             break;
     }
 
+    Serial.print("Counter ");
+    Serial.print( compteur );
+    compteur = compteur +1;
     mySwitch.resetAvailable();
   }
 }
