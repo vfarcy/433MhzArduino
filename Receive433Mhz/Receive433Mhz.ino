@@ -37,7 +37,7 @@ bool debounce(int number) {
 
 void setup() {
   Serial.begin(115200);
-  mySwitch.enableReceive(0);  // Receiver on inerrupt 0 => that is pin #2
+  mySwitch.enableReceive(0);  // Receiver on interrupt 0 => that is pin #2 on an Arduino Uno
 }
 
 void loop() {
